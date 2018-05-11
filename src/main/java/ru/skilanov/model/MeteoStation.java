@@ -29,6 +29,10 @@ public class MeteoStation {
         this.name = name;
     }
 
+    public MeteoStation(String name) {
+        this.name = name;
+    }
+
     public MeteoStation() {
     }
 
