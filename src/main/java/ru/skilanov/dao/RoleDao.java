@@ -1,12 +1,12 @@
 package ru.skilanov.dao;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import ru.skilanov.model.Role;
-import ru.skilanov.model.Users;
 
 import java.util.List;
 
+/**
+ * Слой dao для role.
+ */
 public interface RoleDao {
     /**
      * Метод возвращает список всех ролей.

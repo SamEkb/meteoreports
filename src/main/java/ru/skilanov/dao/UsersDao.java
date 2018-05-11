@@ -4,6 +4,9 @@ import ru.skilanov.model.Users;
 
 import java.util.List;
 
+/**
+ * Слой dao для user.
+ */
 public interface UsersDao {
     /**
      * Метод возвращает список всех пользователей.
