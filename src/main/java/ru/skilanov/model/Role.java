@@ -1,34 +1,29 @@
 package ru.skilanov.model;
 
-import org.hibernate.annotations.Table;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
  * Модель данных роли пользователя системы.
  */
 @Entity
-@Table(appliesTo = "role")
+@Table(name = "role")
 public class Role {
     /**
      * Идентификатор роли.
      */
     @Id
     @GeneratedValue
+    @Column(name = "role_id")
     private int id;
 
     /**
      * Наименование роли.
      */
-    @Column(name = "name")
+    @Column(name = "role_name")
     private String name;
 
-    public Role(int id, String name) {
-        this.id = id;
+    public Role(String name) {
         this.name = name;
     }
 
@@ -70,6 +65,7 @@ public class Role {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(id, name);
     }
 }

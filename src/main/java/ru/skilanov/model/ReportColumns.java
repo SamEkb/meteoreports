@@ -20,7 +20,7 @@ public class ReportColumns {
     /**
      * Имя.
      */
-    @Column(name = "name")
+    @Column(name = "column_name")
     private String name;
 
     /**

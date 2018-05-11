@@ -1,7 +1,6 @@
 package ru.skilanov.model;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,7 +10,7 @@ import java.util.Objects;
  * Модель данных пользователей системы.
  */
 @Entity
-@Table(appliesTo = "users")
+@Table(name = "users")
 public class Users {
     /**
      * Идентификатор пользователя.
@@ -35,7 +34,7 @@ public class Users {
     /**
      * Имя пользователя.
      */
-    @Column(name = "name")
+    @Column(name = "user_name")
     private String name;
 
     /**
@@ -51,6 +50,14 @@ public class Users {
     @JoinColumn(name = "role_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Role roleId;
+
+    public Users(String login, String password, String name, Timestamp registrationDate, Role roleId) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.registrationDate = registrationDate;
+        this.roleId = roleId;
+    }
 
     public Users(int id, String login, String password, String name, Timestamp registrationDate, Role roleId) {
         this.id = id;

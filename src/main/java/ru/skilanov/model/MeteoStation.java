@@ -21,7 +21,7 @@ public class MeteoStation {
     /**
      * Наименование метеостанции.
      */
-    @Column(name = "name")
+    @Column(name = "station_name")
     private String name;
 
     public MeteoStation(int id, String name) {

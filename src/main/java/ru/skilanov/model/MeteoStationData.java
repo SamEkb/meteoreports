@@ -1,16 +1,17 @@
 package ru.skilanov.model;
 
-import org.hibernate.annotations.Table;
+
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
 /**
  * Модель данных показаний с метеостанции.
  */
 @Entity
-@Table(appliesTo = "meteo_station_data")
+@Table(name = "meteo_station_data")
 public class MeteoStationData {
 
     /**

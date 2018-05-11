@@ -1,6 +1,5 @@
 package ru.skilanov.model;
 
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -10,7 +9,7 @@ import java.util.Objects;
  * Меодель данных отчета.
  */
 @Entity
-@Table(appliesTo = "reports")
+@Table(name = "reports")
 public class Reports {
     /**
      * Идентификатор отчета.

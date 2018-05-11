@@ -1,16 +1,16 @@
 package ru.skilanov.model;
 
-import org.hibernate.annotations.Table;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
 /**
  * Строки отчета.
  */
 @Entity
-@Table(appliesTo = "report_rows")
+@Table(name = "report_rows")
 public class ReportRows {
 
     /**
