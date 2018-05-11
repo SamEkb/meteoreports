@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/meteoreports</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">root</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+
+        <mapping class="ru.skilanov.model.Users"/>
+        <mapping class="ru.skilanov.model.Role"/>
+        <mapping class="ru.skilanov.model.MeteoStation"/>
+        <mapping class="ru.skilanov.model.MeteoStationData"/>
+        <mapping class="ru.skilanov.model.Reports"/>
+        <mapping class="ru.skilanov.model.ReportColumns"/>
+        <mapping class="ru.skilanov.model.ReportRows"/>
+
+    </session-factory>
+</hibernate-configuration>
