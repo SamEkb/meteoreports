@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</property>
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password"></property>
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <mapping class="ru.skilanov.model.Users"/>
+        <mapping class="ru.skilanov.model.Role"/>
+        <mapping class="ru.skilanov.model.MeteoStation"/>
+        <mapping class="ru.skilanov.model.MeteoStationData"/>
+        <mapping class="ru.skilanov.model.Reports"/>
+        <mapping class="ru.skilanov.model.ReportColumns"/>
+        <mapping class="ru.skilanov.model.ReportRows"/>
+
+    </session-factory>
+</hibernate-configuration>
