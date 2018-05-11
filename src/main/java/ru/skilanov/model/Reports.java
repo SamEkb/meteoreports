@@ -15,7 +15,7 @@ public class Reports {
      * Идентификатор отчета.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**

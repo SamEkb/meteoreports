@@ -16,7 +16,7 @@ public class Users {
      * Идентификатор пользователя.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**

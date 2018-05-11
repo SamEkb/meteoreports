@@ -14,7 +14,7 @@ public class ReportColumns {
      * Идентификатор колонки отчета.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**
