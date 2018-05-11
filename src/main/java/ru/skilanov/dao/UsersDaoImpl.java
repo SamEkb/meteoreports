@@ -6,13 +6,29 @@ import ru.skilanov.model.Users;
 
 import java.util.List;
 
+/**
+ * Реализация интерфейса UsersDao.
+ */
 public class UsersDaoImpl implements UsersDao {
+    /**
+     * Фабрика подключений hibernate.
+     */
     private SessionFactory factory;
 
+    /**
+     * Конструктор.
+     *
+     * @param factory SessionFactory
+     */
     public UsersDaoImpl(SessionFactory factory) {
         this.factory = factory;
     }
 
+    /**
+     * Метод возвращает список всех пользователей.
+     *
+     * @return List
+     */
     @Override
     public List<Users> getAll() {
         try (Session session = factory.openSession()) {
@@ -26,6 +42,11 @@ public class UsersDaoImpl implements UsersDao {
         }
     }
 
+    /**
+     * Метод добавляет нового пользователя.
+     *
+     * @param user User
+     */
     @Override
     public void insert(Users user) {
         try (Session session = factory.openSession()) {
@@ -37,6 +58,11 @@ public class UsersDaoImpl implements UsersDao {
         }
     }
 
+    /**
+     * Метод удаляет пользователя.
+     *
+     * @param id int
+     */
     @Override
     public void deleteUser(int id) {
         try (Session session = factory.openSession()) {
@@ -49,6 +75,11 @@ public class UsersDaoImpl implements UsersDao {
         }
     }
 
+    /**
+     * Метод обновляет пользователя.
+     *
+     * @param user User
+     */
     @Override
     public void update(Users user) {
         Session session = factory.openSession();
@@ -59,6 +90,12 @@ public class UsersDaoImpl implements UsersDao {
         session.getTransaction().commit();
     }
 
+    /**
+     * Метод поиска пользователя по id.
+     *
+     * @param id int
+     * @return User
+     */
     @Override
     public Users findById(int id) {
         Session session = factory.openSession();

@@ -6,13 +6,28 @@ import ru.skilanov.model.Role;
 
 import java.util.List;
 
+/**
+ * Реализация интерфейса RoleDao.
+ */
 public class RoleDaoImpl implements RoleDao {
+    /**
+     * Фабрика соединений hibernate.
+     */
     private SessionFactory factory;
 
+    /**
+     * Конструктор.
+     * @param factory SessionFactory
+     */
     public RoleDaoImpl(SessionFactory factory) {
         this.factory = factory;
     }
 
+    /**
+     * Метод возвращает список всех ролей.
+     *
+     * @return List
+     */
     @Override
     public List<Role> getAll() {
         try (Session session = factory.openSession()) {
@@ -26,6 +41,11 @@ public class RoleDaoImpl implements RoleDao {
         }
     }
 
+    /**
+     * Метод добавляет новую роль.
+     *
+     * @param role Role
+     */
     @Override
     public void insert(Role role) {
         try (Session session = factory.openSession()) {
@@ -37,6 +57,11 @@ public class RoleDaoImpl implements RoleDao {
         }
     }
 
+    /**
+     * Метод удаляет роль.
+     *
+     * @param id int
+     */
     @Override
     public void deleteRole(int id) {
         try (Session session = factory.openSession()) {
@@ -49,6 +74,11 @@ public class RoleDaoImpl implements RoleDao {
         }
     }
 
+    /**
+     * Метод обновляет роль.
+     *
+     * @param role Role
+     */
     @Override
     public void update(Role role) {
         try (Session session = factory.openSession()) {
@@ -60,6 +90,12 @@ public class RoleDaoImpl implements RoleDao {
         }
     }
 
+    /**
+     * Метод поиска роли по id.
+     *
+     * @param id int
+     * @return Role
+     */
     @Override
     public Role findById(int id) {
         try (Session session = factory.openSession()) {
