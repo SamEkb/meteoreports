@@ -26,6 +26,14 @@ public class MeteoStationDaoImplTest {
      */
     private static final String EUROPE = "Europe";
     /**
+     * Константа 0.
+     */
+    private static final int ZERO = 0;
+    /**
+     * Константа 1.
+     */
+    private static final int ONE = 1;
+    /**
      * Фабрика подключений hibernate.
      */
     private SessionFactory factory;
@@ -33,6 +41,11 @@ public class MeteoStationDaoImplTest {
      * Dao метеостанции.
      */
     private MeteoStationDao meteoStationDao;
+
+    /**
+     * Константа метеостанции.
+     */
+    private MeteoStation station;
 
     /**
      * Перед тестом.
@@ -43,6 +56,8 @@ public class MeteoStationDaoImplTest {
     public void setUp() throws Exception {
         factory = new Configuration().configure().buildSessionFactory();
         meteoStationDao = new MeteoStationDaoImpl(factory);
+
+        station = new MeteoStation(ARCTIC);
     }
 
     /**
@@ -60,11 +75,9 @@ public class MeteoStationDaoImplTest {
      */
     @Test
     public void whenInsertMeteoStation_ThenItInserted() {
-        MeteoStation station = new MeteoStation(ARCTIC);
-
         meteoStationDao.insert(station);
 
-        String expectedResultName = meteoStationDao.getAll().get(0).getName();
+        String expectedResultName = meteoStationDao.getAll().get(ZERO).getName();
 
         assertThat(expectedResultName, is(ARCTIC));
     }
@@ -74,8 +87,6 @@ public class MeteoStationDaoImplTest {
      */
     @Test
     public void whenGetAll_ThenReturnList() {
-        MeteoStation station = new MeteoStation(ARCTIC);
-
         meteoStationDao.insert(station);
 
         List<MeteoStation> result = meteoStationDao.getAll();
@@ -92,12 +103,10 @@ public class MeteoStationDaoImplTest {
      */
     @Test
     public void whenDelete_ThenMeteoStationDeleted() {
-        MeteoStation station = new MeteoStation(ARCTIC);
-
         meteoStationDao.insert(station);
-        meteoStationDao.deleteStation(1);
+        meteoStationDao.deleteStation(ONE);
 
-        assertNull(meteoStationDao.findById(1));
+        assertNull(meteoStationDao.findById(ONE));
     }
 
     /**
@@ -105,11 +114,9 @@ public class MeteoStationDaoImplTest {
      */
     @Test
     public void whenFindById_ThenReturnRightResult() {
-        MeteoStation station = new MeteoStation(ARCTIC);
-
         meteoStationDao.insert(station);
 
-        MeteoStation resultStation = meteoStationDao.findById(1);
+        MeteoStation resultStation = meteoStationDao.findById(ONE);
 
         assertThat(resultStation, is(station));
     }
@@ -119,14 +126,12 @@ public class MeteoStationDaoImplTest {
      */
     @Test
     public void whenUpdate_ThenItUpdated() {
-        MeteoStation station = new MeteoStation(ARCTIC);
-
         meteoStationDao.insert(station);
-        MeteoStation modStation = meteoStationDao.findById(1);
+        MeteoStation modStation = meteoStationDao.findById(ONE);
         modStation.setName(EUROPE);
         meteoStationDao.update(modStation);
 
-        String expectedStationName = meteoStationDao.getAll().get(0).getName();
+        String expectedStationName = meteoStationDao.getAll().get(ZERO).getName();
 
         assertThat(expectedStationName, is(EUROPE));
     }

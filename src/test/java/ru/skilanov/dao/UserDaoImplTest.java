@@ -20,6 +20,22 @@ import static org.junit.Assert.*;
  */
 public class UserDaoImplTest {
     /**
+     * Константа 1.
+     */
+    private static final int ONE = 1;
+    /**
+     * Константа 0.
+     */
+    private static final int ZERO = 0;
+    /**
+     * Константа логин.
+     */
+    private static final String LOGIN = "User";
+    /**
+     * Константа имя пользователя.
+     */
+    private static final String NAME = "Sam Kilanoff";
+    /**
      * Фабрика подключений hibernate.
      */
     private SessionFactory factory;
@@ -27,6 +43,16 @@ public class UserDaoImplTest {
      * Dao пользователя.
      */
     private UsersDao usersDao;
+
+    /**
+     * Пользователь sam.
+     */
+    private Users userSam;
+
+    /**
+     * Пользователь mike.
+     */
+    private Users userMike;
 
     /**
      * Перед тестом.
@@ -37,6 +63,10 @@ public class UserDaoImplTest {
     public void setUp() throws Exception {
         factory = new Configuration().configure().buildSessionFactory();
         usersDao = new UsersDaoImpl(factory);
+        userSam = new Users("Sam", "Pass", "Sam Kilanoff",
+                new Timestamp(System.currentTimeMillis()), new Role("User"));
+        userMike = new Users("Mike", "Pass", "Mike Johns",
+                new Timestamp(System.currentTimeMillis()), new Role("User"));
     }
 
     /**
@@ -54,14 +84,11 @@ public class UserDaoImplTest {
      */
     @Test
     public void whenInsertNewUser_ThenItInserted() {
-        Users userSam = new Users("Sam", "Pass", "Sam Kilanoff",
-                new Timestamp(System.currentTimeMillis()), new Role("User"));
-
         usersDao.insert(userSam);
 
-        String expectedName = usersDao.getAll().get(0).getName();
+        String expectedName = usersDao.getAll().get(ZERO).getName();
 
-        assertThat(expectedName, is("Sam Kilanoff"));
+        assertThat(expectedName, is(NAME));
     }
 
     /**
@@ -69,11 +96,6 @@ public class UserDaoImplTest {
      */
     @Test
     public void whenGetAll_ThenReturnList() {
-        Users userSam = new Users("Sam", "Pass", "Sam Kilanoff",
-                new Timestamp(System.currentTimeMillis()), new Role("User"));
-        Users userMike = new Users("Mike", "Pass", "Mike Johns",
-                new Timestamp(System.currentTimeMillis()), new Role("User"));
-
         usersDao.insert(userSam);
         usersDao.insert(userMike);
 
@@ -92,12 +114,9 @@ public class UserDaoImplTest {
      */
     @Test
     public void whenDelete_ThenUserDeleted() {
-        Users userSam = new Users("Sam", "Pass", "Sam Kilanoff",
-                new Timestamp(System.currentTimeMillis()), new Role("User"));
-
         usersDao.insert(userSam);
-        usersDao.deleteUser(1);
-        assertNull(usersDao.findById(1));
+        usersDao.deleteUser(ONE);
+        assertNull(usersDao.findById(ONE));
     }
 
     /**
@@ -105,12 +124,9 @@ public class UserDaoImplTest {
      */
     @Test
     public void whenFindById_ThenReturnExpectedUser() {
-        Users userSam = new Users("Sam", "Pass", "Sam Kilanoff",
-                new Timestamp(System.currentTimeMillis()), new Role("User"));
-
         usersDao.insert(userSam);
 
-        Users expectedUser = usersDao.findById(1);
+        Users expectedUser = usersDao.findById(ONE);
 
         assertThat(expectedUser, is(userSam));
     }
@@ -120,17 +136,14 @@ public class UserDaoImplTest {
      */
     @Test
     public void whenUpdateUser_ThenItUpdated() {
-        Users userSam = new Users("Sam", "Pass", "Sam Kilanoff",
-                new Timestamp(System.currentTimeMillis()), new Role("User"));
-
         usersDao.insert(userSam);
 
-        Users expectedUser = usersDao.findById(1);
-        expectedUser.setLogin("User");
+        Users expectedUser = usersDao.findById(ONE);
+        expectedUser.setLogin(LOGIN);
         usersDao.update(expectedUser);
 
-        String resultLogin = usersDao.getAll().get(0).getLogin();
+        String resultLogin = usersDao.getAll().get(ZERO).getLogin();
 
-        assertThat(resultLogin, is("User"));
+        assertThat(resultLogin, is(LOGIN));
     }
 }

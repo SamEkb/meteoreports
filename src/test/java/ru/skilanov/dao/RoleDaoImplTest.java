@@ -17,7 +17,18 @@ import static org.junit.Assert.*;
  * Класс тестирует слой dao роли.
  */
 public class RoleDaoImplTest {
-
+    /**
+     * Константа 1.
+     */
+    private static final int ONE = 1;
+    /**
+     * Константа 2.
+     */
+    private static final int TWO = 2;
+    /**
+     * Константа 1.
+     */
+    private static final int ZERO = 0;
     /**
      * Константа роли пользователь.
      */
@@ -36,6 +47,16 @@ public class RoleDaoImplTest {
     private RoleDao roleDao;
 
     /**
+     * Роль user.
+     */
+    private Role userRole;
+
+    /**
+     * роль admin.
+     */
+    private Role adminRole;
+
+    /**
      * Метод проводит инициализацию перед каждым тестом.
      *
      * @throws Exception Exception
@@ -44,6 +65,9 @@ public class RoleDaoImplTest {
     public void setUp() throws Exception {
         factory = new Configuration().configure().buildSessionFactory();
         roleDao = new RoleDaoImpl(factory);
+
+        userRole = new Role(USER);
+        adminRole = new Role(ADMIN);
     }
 
     /**
@@ -61,11 +85,9 @@ public class RoleDaoImplTest {
      */
     @Test
     public void whenInsertRole_ThenItInserted() {
-        Role userRole = new Role(USER);
-
         roleDao.insert(userRole);
 
-        String result = roleDao.getAll().get(0).getName();
+        String result = roleDao.getAll().get(ZERO).getName();
 
         assertThat(result, is(USER));
     }
@@ -75,9 +97,6 @@ public class RoleDaoImplTest {
      */
     @Test
     public void whenGetAll_ThenReturnList() {
-        Role userRole = new Role(USER);
-        Role adminRole = new Role(ADMIN);
-
         roleDao.insert(userRole);
         roleDao.insert(adminRole);
 
@@ -87,8 +106,8 @@ public class RoleDaoImplTest {
         expected.add(userRole);
         expected.add(adminRole);
 
-        assertThat(result.size(), is(2));
-        assertThat(result.get(1).getName(), is(ADMIN));
+        assertThat(result.size(), is(TWO));
+        assertThat(result.get(ONE).getName(), is(ADMIN));
         assertArrayEquals(result.toArray(), expected.toArray());
     }
 
@@ -97,15 +116,12 @@ public class RoleDaoImplTest {
      */
     @Test
     public void whenDelete_ThenRoleDeleted() {
-        Role userRole = new Role(USER);
-        Role adminRole = new Role(ADMIN);
-
         roleDao.insert(userRole);
         roleDao.insert(adminRole);
 
-        roleDao.deleteRole(1);
+        roleDao.deleteRole(ONE);
 
-        assertNull(roleDao.findById(1));
+        assertNull(roleDao.findById(ONE));
     }
 
     /**
@@ -113,13 +129,10 @@ public class RoleDaoImplTest {
      */
     @Test
     public void whenFindById_ThenReturnExpectedRole() {
-        Role userRole = new Role(USER);
-        Role adminRole = new Role(ADMIN);
-
         roleDao.insert(userRole);
         roleDao.insert(adminRole);
 
-        Role resultRole = roleDao.findById(2);
+        Role resultRole = roleDao.findById(TWO);
 
         assertThat(adminRole, is(resultRole));
     }
@@ -129,15 +142,13 @@ public class RoleDaoImplTest {
      */
     @Test
     public void whenUpdateRole_ThenRoleIsUpdated() {
-        Role userRole = new Role(USER);
-
         roleDao.insert(userRole);
 
-        Role modRole = roleDao.findById(1);
+        Role modRole = roleDao.findById(ONE);
         modRole.setName(ADMIN);
         roleDao.update(modRole);
 
-        String expectedRole = roleDao.getAll().get(0).getName();
+        String expectedRole = roleDao.getAll().get(ZERO).getName();
 
         assertThat(expectedRole, is(ADMIN));
     }

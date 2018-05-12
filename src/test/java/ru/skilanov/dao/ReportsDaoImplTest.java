@@ -22,6 +22,22 @@ import static org.junit.Assert.*;
  */
 public class ReportsDaoImplTest {
     /**
+     * Константа шапки.
+     */
+    private static final String HEADER = "Header text";
+    /**
+     * Константа 0.
+     */
+    private static final int ZERO = 0;
+    /**
+     * Константа 1.
+     */
+    private static final int ONE = 1;
+    /**
+     * Константа измененной шапки.
+     */
+    private static final String CHANGED_HEADER_TEXT = "Changed header text";
+    /**
      * Фабрика сессий hibernate.
      */
     private SessionFactory factory;
@@ -29,6 +45,11 @@ public class ReportsDaoImplTest {
      * Dao отчетов.
      */
     private ReportsDao reportsDao;
+
+    /**
+     * Тестовый отчет.
+     */
+    private Reports report;
 
     /**
      * Перед тестом.
@@ -39,6 +60,14 @@ public class ReportsDaoImplTest {
     public void setUp() throws Exception {
         factory = new Configuration().configure().buildSessionFactory();
         reportsDao = new ReportsDaoImpl(factory);
+
+        MeteoStation arcticStation = new MeteoStation("Arctic");
+        Role userRole = new Role("User");
+        Users userSam = new Users("Sam", "pass", "User1990",
+                new Timestamp(System.currentTimeMillis()), userRole);
+        report = new Reports("Header text", "Footer text", arcticStation, userSam,
+                new Timestamp(System.currentTimeMillis()));
+
     }
 
     /**
@@ -56,18 +85,11 @@ public class ReportsDaoImplTest {
      */
     @Test
     public void whenInsertNewReport_ThenItInserted() {
-        MeteoStation arcticStation = new MeteoStation("Arctic");
-        Role userRole = new Role("User");
-        Users userSam = new Users("Sam", "pass", "User1990",
-                new Timestamp(System.currentTimeMillis()), userRole);
-        Reports report = new Reports("Header text", "Footer text", arcticStation, userSam,
-                new Timestamp(System.currentTimeMillis()));
-
         reportsDao.insert(report);
 
-        String resultHeader = reportsDao.getAll().get(0).getHeader();
+        String resultHeader = reportsDao.getAll().get(ZERO).getHeader();
 
-        assertThat(resultHeader, is("Header text"));
+        assertThat(resultHeader, is(HEADER));
     }
 
     /**
@@ -75,13 +97,6 @@ public class ReportsDaoImplTest {
      */
     @Test
     public void whenGetAll_ThenReturnList() {
-        MeteoStation arcticStation = new MeteoStation("Arctic");
-        Role userRole = new Role("User");
-        Users userSam = new Users("Sam", "pass", "User1990",
-                new Timestamp(System.currentTimeMillis()), userRole);
-        Reports report = new Reports("Header text", "Footer text", arcticStation, userSam,
-                new Timestamp(System.currentTimeMillis()));
-
         reportsDao.insert(report);
 
         List<Reports> result = reportsDao.getAll();
@@ -97,17 +112,10 @@ public class ReportsDaoImplTest {
      */
     @Test
     public void whenDelete_ThenReportDeleted() {
-        MeteoStation arcticStation = new MeteoStation("Arctic");
-        Role userRole = new Role("User");
-        Users userSam = new Users("Sam", "pass", "User1990",
-                new Timestamp(System.currentTimeMillis()), userRole);
-        Reports report = new Reports("Header text", "Footer text", arcticStation, userSam,
-                new Timestamp(System.currentTimeMillis()));
-
         reportsDao.insert(report);
-        reportsDao.deleteReport(1);
+        reportsDao.deleteReport(ONE);
 
-        assertNull(reportsDao.findById(1));
+        assertNull(reportsDao.findById(ONE));
     }
 
     /**
@@ -115,16 +123,9 @@ public class ReportsDaoImplTest {
      */
     @Test
     public void whenFindById_ThenReturnRightReport() {
-        MeteoStation arcticStation = new MeteoStation("Arctic");
-        Role userRole = new Role("User");
-        Users userSam = new Users("Sam", "pass", "User1990",
-                new Timestamp(System.currentTimeMillis()), userRole);
-        Reports report = new Reports("Header text", "Footer text", arcticStation, userSam,
-                new Timestamp(System.currentTimeMillis()));
-
         reportsDao.insert(report);
 
-        Reports resultReport = reportsDao.findById(1);
+        Reports resultReport = reportsDao.findById(ONE);
 
         assertThat(resultReport, is(report));
     }
@@ -134,21 +135,14 @@ public class ReportsDaoImplTest {
      */
     @Test
     public void whenUpdate_ThenItUpdated() {
-        MeteoStation arcticStation = new MeteoStation("Arctic");
-        Role userRole = new Role("User");
-        Users userSam = new Users("Sam", "pass", "User1990",
-                new Timestamp(System.currentTimeMillis()), userRole);
-        Reports report = new Reports("Header text", "Footer text", arcticStation, userSam,
-                new Timestamp(System.currentTimeMillis()));
-
         reportsDao.insert(report);
 
-        Reports modReport = reportsDao.findById(1);
-        modReport.setHeader("Changed header text");
+        Reports modReport = reportsDao.findById(ONE);
+        modReport.setHeader(CHANGED_HEADER_TEXT);
         reportsDao.update(modReport);
 
-        String expectedHeader = reportsDao.getAll().get(0).getHeader();
+        String expectedHeader = reportsDao.getAll().get(ZERO).getHeader();
 
-        assertThat(expectedHeader, is("Changed header text"));
+        assertThat(expectedHeader, is(CHANGED_HEADER_TEXT));
     }
 }

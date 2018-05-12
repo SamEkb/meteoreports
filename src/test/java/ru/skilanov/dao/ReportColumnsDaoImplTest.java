@@ -19,6 +19,22 @@ import static org.junit.Assert.*;
  */
 public class ReportColumnsDaoImplTest {
     /**
+     * Константа колонки теспиратура.
+     */
+    private static final String TEMPERATURE = "Temperature";
+    /**
+     * Константа 1.
+     */
+    private static final int ONE = 1;
+    /**
+     * Константа колонки давление.
+     */
+    private static final String PRESSURE = "Pressure";
+    /**
+     * Константа 0.
+     */
+    private static final int ZERO = 0;
+    /**
      * Фабрика подключений hibernate.
      */
     private SessionFactory factory;
@@ -27,6 +43,9 @@ public class ReportColumnsDaoImplTest {
      */
     private ReportColumnsDao reportColumnsDao;
 
+    /**
+     * Тестовые колонки.
+     */
     private ReportColumns reportColumns;
 
     /**
@@ -64,9 +83,9 @@ public class ReportColumnsDaoImplTest {
     public void whenInsert_ThenItInserted() {
         reportColumnsDao.insert(reportColumns);
 
-        String reportColumnName = reportColumnsDao.getAll().get(0).getName();
+        String reportColumnName = reportColumnsDao.getAll().get(ZERO).getName();
 
-        assertThat(reportColumnName, is("Temperature"));
+        assertThat(reportColumnName, is(TEMPERATURE));
     }
 
     /**
@@ -90,9 +109,9 @@ public class ReportColumnsDaoImplTest {
     @Test
     public void whenDelete_ThenItDeleted() {
         reportColumnsDao.insert(reportColumns);
-        reportColumnsDao.deleteColumn(1);
+        reportColumnsDao.deleteColumn(ONE);
 
-        assertNull(reportColumnsDao.findById(1));
+        assertNull(reportColumnsDao.findById(ONE));
     }
 
     /**
@@ -102,7 +121,7 @@ public class ReportColumnsDaoImplTest {
     public void whenFindById_ThenReturnRightResult() {
         reportColumnsDao.insert(reportColumns);
 
-        ReportColumns result = reportColumnsDao.findById(1);
+        ReportColumns result = reportColumnsDao.findById(ONE);
 
         assertThat(result, is(reportColumns));
     }
@@ -111,15 +130,15 @@ public class ReportColumnsDaoImplTest {
      * Тестирует изменение колонки.
      */
     @Test
-    public void whenUpdateColumn_ThenItUpdated(){
+    public void whenUpdateColumn_ThenItUpdated() {
         reportColumnsDao.insert(reportColumns);
 
-        ReportColumns modColumn = reportColumnsDao.findById(1);
-        modColumn.setName("Pressure");
+        ReportColumns modColumn = reportColumnsDao.findById(ONE);
+        modColumn.setName(PRESSURE);
         reportColumnsDao.update(modColumn);
 
-        String resultName = reportColumnsDao.getAll().get(0).getName();
+        String resultName = reportColumnsDao.getAll().get(ZERO).getName();
 
-        assertThat(resultName, is("Pressure"));
+        assertThat(resultName, is(PRESSURE));
     }
 }
