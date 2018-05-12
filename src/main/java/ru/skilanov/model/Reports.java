@@ -1,6 +1,8 @@
 package ru.skilanov.model;
 
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -35,6 +37,7 @@ public class Reports {
      */
     @ManyToOne
     @JoinColumn(name = "meteo_station_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private MeteoStation meteoStationId;
 
     /**
@@ -42,6 +45,7 @@ public class Reports {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Users userId;
 
     /**
@@ -55,6 +59,14 @@ public class Reports {
 
     public Reports(int id, String header, String footer, MeteoStation meteoStationId, Users userId, Timestamp creationdate) {
         this.id = id;
+        this.header = header;
+        this.footer = footer;
+        this.meteoStationId = meteoStationId;
+        this.userId = userId;
+        this.creationdate = creationdate;
+    }
+
+    public Reports(String header, String footer, MeteoStation meteoStationId, Users userId, Timestamp creationdate) {
         this.header = header;
         this.footer = footer;
         this.meteoStationId = meteoStationId;
