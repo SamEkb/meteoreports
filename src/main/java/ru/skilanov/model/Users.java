@@ -46,9 +46,8 @@ public class Users {
     /**
      * Идентификатор роли.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Role roleId;
 
     public Users(String login, String password, String name, Timestamp registrationDate, Role roleId) {

@@ -1,9 +1,6 @@
 package ru.skilanov.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -16,7 +13,7 @@ public class MeteoStationDataPk implements Serializable {
     /**
      * Идентификатор метеостанции с который были получены данные.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "meteo_station_id")
     private MeteoStation meteoStationId;
 
@@ -49,6 +46,16 @@ public class MeteoStationDataPk implements Serializable {
      */
     @Column(name = "wind_speed")
     private int windSpeed;
+
+    public MeteoStationDataPk(MeteoStation meteoStationId, Timestamp readTimestamp, double temperature, int pressure,
+                              int windDirection, int windSpeed) {
+        this.meteoStationId = meteoStationId;
+        this.readTimestamp = readTimestamp;
+        this.temperature = temperature;
+        this.pressure = pressure;
+        this.windDirection = windDirection;
+        this.windSpeed = windSpeed;
+    }
 
     public MeteoStationDataPk() {
     }

@@ -1,9 +1,6 @@
 package ru.skilanov.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -21,7 +18,7 @@ public class ReportRowsPk implements Serializable {
     /**
      * Идентификатор колонки к которой принадлежит строка.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "column_id")
     private ReportColumns columnId;
 

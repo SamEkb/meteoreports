@@ -26,7 +26,7 @@ public class ReportColumns {
     /**
      * Идентификатор отчета.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "report_id")
     private Reports reportId;
 
@@ -47,6 +47,13 @@ public class ReportColumns {
 
     public ReportColumns(int id, String name, Reports reportId, int orderNumber, String type) {
         this.id = id;
+        this.name = name;
+        this.reportId = reportId;
+        this.orderNumber = orderNumber;
+        this.type = type;
+    }
+
+    public ReportColumns(String name, Reports reportId, int orderNumber, String type) {
         this.name = name;
         this.reportId = reportId;
         this.orderNumber = orderNumber;

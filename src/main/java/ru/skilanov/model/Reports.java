@@ -35,17 +35,15 @@ public class Reports {
     /**
      * Идентификатор мтеостанции по которой будет формироваться отчет.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "meteo_station_id")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private MeteoStation meteoStationId;
 
     /**
      * Идентификатор пользователя, который формирует отчет.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Users userId;
 
     /**
